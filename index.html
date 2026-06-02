@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZaykaGG — アート・ギフト</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #111111;
+      --dark:    #181818;
+      --card:    #1e1e1e;
+      --red:     #D11F2A;
+      --red-glow: rgba(209,31,42,0.35);
+      --offwhite: #F3F3F3;
+      --silver:  #C0C0C0;
+      --sakura:  #F2C8D8;
+      --sakura-dim: rgba(242,200,216,0.12);
+      --border:  rgba(255,255,255,0.07);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-jp: 'Noto Sans JP', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease: cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--offwhite);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: rgba(17,17,17,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 60px;
+    }
+
+    @media (min-width: 768px) {
+      header { padding: 0 48px; height: 68px; }
+    }
+
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: white;
+      letter-spacing: 0.02em;
+      clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      color: var(--offwhite);
+      line-height: 1;
+    }
+
+    .logo-text span { color: var(--red); }
+
+    .nav-desktop {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .nav-desktop {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+      }
+
+      .nav-desktop a {
+        font-family: var(--font-jp);
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--silver);
+        text-decoration: none;
+        transition: color 0.2s;
+        position: relative;
+      }
+
+      .nav-desktop a::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--red);
+        transition: width 0.25s var(--ease);
+      }
+
+      .nav-desktop a:hover { color: var(--offwhite); }
+      .nav-desktop a:hover::after { width: 100%; }
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--red);
+        color: white;
+        padding: 9px 20px;
+        font-family: var(--font-body);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        clip-path: polygon(0 0, 92% 0, 100% 20%, 100% 100%, 8% 100%, 0 80%);
+        transition: background 0.2s, transform 0.15s;
+      }
+
+      .nav-cta:hover {
+        background: #e8242f;
+        transform: translateY(-1px);
+      }
+    }
+
+    .burger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    @media (min-width: 768px) {
+      .burger { display: none; }
+    }
+
+    .burger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--offwhite);
+      transition: all 0.3s var(--ease);
+    }
+
+    .burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── DRAWER ── */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s var(--ease);
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: min(80vw, 300px);
+      background: var(--dark);
+      border-right: 1px solid var(--border);
+      z-index: 700;
+      transform: translateX(-100%);
+      transition: transform 0.38s var(--ease);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 0;
+    }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--silver);
+      padding: 4px;
+    }
+
+    .drawer-nav { list-style: none; padding: 16px 0; flex: 1; }
+    .drawer-nav li a {
+      display: block;
+      padding: 14px 24px;
+      font-size: 0.9rem;
+      color: var(--offwhite);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .drawer-nav li a:hover {
+      background: rgba(255,255,255,0.04);
+      border-left-color: var(--red);
+      color: white;
+    }
+
+    .drawer-footer {
+      padding: 20px 24px 0;
+      border-top: 1px solid var(--border);
+    }
+    .drawer-footer p {
+      font-size: 0.72rem;
+      color: var(--silver);
+      letter-spacing: 0.06em;
+      font-family: var(--font-jp);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 95vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    /* decorative JP characters */
+    .hero-jp-deco {
+      position: absolute;
+      top: 8%;
+      right: 5%;
+      font-family: var(--font-jp);
+      font-size: clamp(4rem, 12vw, 9rem);
+      font-weight: 700;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      z-index: 1;
+      user-select: none;
+    }
+
+    .hero-jp-side {
+      position: absolute;
+      right: 2%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-jp);
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.3em;
+      writing-mode: vertical-rl;
+      pointer-events: none;
+      z-index: 1;
+      user-select: none;
+    }
+
+    /* Sakura petals */
+    .sakura-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      width: 8px;
+      height: 10px;
+      background: var(--sakura);
+      border-radius: 50% 50% 50% 0;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      5%   { opacity: 0.6; }
+      95%  { opacity: 0.4; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Red diagonal slash */
+    .hero-slash {
+      position: absolute;
+      right: -5%;
+      top: -10%;
+      width: 45%;
+      height: 130%;
+      background: linear-gradient(135deg, transparent 40%, rgba(209,31,42,0.06) 40%, rgba(209,31,42,0.12) 50%, rgba(209,31,42,0.06) 50%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Horizontal scan line */
+    .hero-scanline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(209,31,42,0.4), transparent);
+      animation: scan 6s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes scan {
+      0%, 100% { top: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 0.3; }
+      50% { top: 100%; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      padding: 80px 28px;
+      max-width: 680px;
+    }
+
+    @media (min-width: 768px) {
+      .hero-content { padding: 100px 60px; }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-jp);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--red-glow); }
+      50% { box-shadow: 0 0 0 6px transparent; }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 13vw, 8.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--offwhite);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .line-red { color: var(--red); display: block; }
+    .hero h1 .line-outline {
+      display: block;
+      -webkit-text-stroke: 1.5px var(--offwhite);
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 0.88rem;
+      color: var(--silver);
+      max-width: 400px;
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 36px;
+      border-left: 2px solid var(--red);
+      padding-left: 16px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red);
+      color: white;
+      padding: 14px 30px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      clip-path: polygon(0 0, 92% 0, 100% 20%, 100% 100%, 8% 100%, 0 80%);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #e8242f;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--red-glow);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--silver);
+      padding: 14px 30px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--red);
+      color: var(--offwhite);
+    }
+
+    /* hero stats row */
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 56px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--offwhite);
+      letter-spacing: 0.04em;
+    }
+
+    .hero-stat-num span { color: var(--red); }
+
+    .hero-stat-label {
+      font-family: var(--font-jp);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      color: var(--silver);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden;
+      background: var(--red);
+      padding: 12px 0;
+      position: relative;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 24s linear infinite;
+      white-space: nowrap;
+    }
+
+    .marquee-item {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: white;
+      padding: 0 28px;
+      flex-shrink: 0;
+    }
+
+    .marquee-sep {
+      color: rgba(255,255,255,0.4);
+      padding: 0 4px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION SHARED ── */
+    .section-eyebrow {
+      font-family: var(--font-jp);
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-eyebrow::after {
+      content: '';
+      flex: 1;
+      max-width: 40px;
+      height: 1px;
+      background: var(--red);
+      opacity: 0.5;
+    }
+
+    .section-title-big {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 0.95;
+      letter-spacing: 0.03em;
+      color: var(--offwhite);
+      margin-bottom: 16px;
+    }
+
+    .section-title-big em {
+      font-style: normal;
+      color: var(--red);
+    }
+
+    /* ── CATALOG ── */
+    #catalog {
+      padding: 80px 28px;
+      background: var(--dark);
+    }
+
+    @media (min-width: 768px) {
+      #catalog { padding: 100px 48px; }
+    }
+
+    .catalog-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .catalog-count {
+      font-family: var(--font-jp);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--silver);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    @media (min-width: 600px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .card {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      background: var(--card);
+      opacity: 0;
+      animation: fadeUp 0.6s var(--ease) forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.1s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.2s; }
+    .card:nth-child(5) { animation-delay: 0.25s; }
+    .card:nth-child(6) { animation-delay: 0.3s; }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: #222;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s var(--ease), opacity 0.3s ease;
+      filter: grayscale(20%) brightness(0.9);
+    }
+
+    .card:hover .card-img img {
+      transform: scale(1.07);
+      filter: grayscale(0%) brightness(1);
+    }
+
+    /* red glitch line on hover */
+    .card-img::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s var(--ease);
+      z-index: 4;
+    }
+
+    .card:hover .card-img::before { transform: scaleX(1); }
+
+    .card-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(17,17,17,0.85) 0%, transparent 50%);
+      z-index: 2;
+    }
+
+    .card-num {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: white;
+      background: var(--red);
+      padding: 2px 8px;
+      z-index: 3;
+      clip-path: polygon(0 0, 88% 0, 100% 30%, 100% 100%, 12% 100%, 0 70%);
+    }
+
+    .card-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px;
+      z-index: 3;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      letter-spacing: 0.05em;
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .card-tag {
+      font-family: var(--font-jp);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sakura);
+    }
+
+    .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #222;
+    }
+
+    .placeholder svg {
+      opacity: 0.12;
+      width: 36px;
+      height: 36px;
+    }
+
+    .card-img img.is-changing { opacity: 0; }
+
+    /* ── PRODUCT PAGE ── */
+    .product-page {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 800;
+      transform: translateX(100%);
+      transition: transform 0.4s var(--ease);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .product-page.open { transform: translateX(0); }
+
+    .product-topbar {
+      position: sticky;
+      top: 0;
+      background: rgba(17,17,17,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 56px;
+      z-index: 10;
+    }
+
+    @media (min-width: 768px) {
+      .product-topbar { padding: 0 48px; height: 64px; }
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-jp);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--silver);
+      transition: color 0.2s;
+    }
+
+    .back-btn:hover { color: var(--offwhite); }
+    .back-btn svg { transition: transform 0.2s; }
+    .back-btn:hover svg { transform: translateX(-3px); }
+
+    .product-num-label {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .product-inner {
+      padding: 32px 24px 80px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .product-inner {
+        padding: 48px 48px 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+        align-items: start;
+      }
+    }
+
+    .gallery-main {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--card);
+      overflow: hidden;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-thumbs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .gallery-thumb {
+      flex: 1 1 calc(25% - 6px);
+      max-width: calc(25% - 6px);
+      aspect-ratio: 3/4;
+      background: var(--card);
+      cursor: pointer;
+      overflow: hidden;
+      border: 1.5px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .gallery-thumb.active { border-color: var(--red); }
+
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-info { padding-top: 8px; }
+
+    @media (min-width: 768px) {
+      .product-info { padding-top: 0; position: sticky; top: 80px; }
+    }
+
+    .product-tag {
+      font-family: var(--font-jp);
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+
+    .product-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 3rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--offwhite);
+      margin-bottom: 24px;
+    }
+
+    .product-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--red);
+      margin-bottom: 20px;
+    }
+
+    .product-desc {
+      font-size: 0.88rem;
+      color: var(--silver);
+      line-height: 1.8;
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .product-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .product-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--silver);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-weight: 300;
+    }
+
+    .product-features li:first-child { border-top: 1px solid var(--border); }
+
+    .feat-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--red);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .btn-order {
+      display: block;
+      width: 100%;
+      background: var(--red);
+      color: white;
+      padding: 18px 24px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      clip-path: polygon(0 0, 97% 0, 100% 10%, 100% 100%, 3% 100%, 0 90%);
+    }
+
+    .btn-order:hover {
+      background: #e8242f;
+      box-shadow: 0 8px 32px var(--red-glow);
+    }
+
+    /* ── HOW WE WORK ── */
+    .how-section {
+      padding: 80px 28px 100px;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .how-section { padding: 100px 48px 120px; }
+    }
+
+    /* big JP character background */
+    .how-section::before {
+      content: 'ギルド';
+      position: absolute;
+      bottom: -40px;
+      right: -20px;
+      font-family: var(--font-jp);
+      font-size: 18rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.02);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .how-header {
+      margin-bottom: 56px;
+    }
+
+    .how-sub {
+      font-size: 0.85rem;
+      color: var(--silver);
+      max-width: 480px;
+      line-height: 1.75;
+      font-weight: 300;
+      font-style: italic;
+      margin-top: 14px;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      max-width: 960px;
+    }
+
+    @media (min-width: 640px) {
+      .how-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (min-width: 1024px) {
+      .how-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .how-card {
+      background: var(--card);
+      padding: 28px 24px;
+      border: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .how-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s var(--ease);
+    }
+
+    .how-card:hover::after { transform: scaleX(1); }
+
+    .how-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .how-card:nth-child(1) { transition-delay: 0.05s; }
+    .how-card:nth-child(2) { transition-delay: 0.1s; }
+    .how-card:nth-child(3) { transition-delay: 0.15s; }
+    .how-card:nth-child(4) { transition-delay: 0.2s; }
+    .how-card:nth-child(5) { transition-delay: 0.25s; }
+    .how-card:nth-child(6) { transition-delay: 0.3s; }
+
+    .how-card-num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .how-card-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.06em;
+      color: var(--offwhite);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .how-card-desc {
+      font-size: 0.78rem;
+      color: var(--silver);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: var(--dark);
+      padding: 80px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .contact-section { padding: 100px 48px; }
+    }
+
+    .contact-section::before {
+      content: 'GG';
+      position: absolute;
+      right: -2%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: 22rem;
+      color: rgba(209,31,42,0.04);
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .contact-inner {
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+      color: var(--offwhite);
+    }
+
+    .contact-section h2 em {
+      font-style: normal;
+      color: var(--red);
+      display: block;
+    }
+
+    .contact-section p {
+      font-size: 0.88rem;
+      color: var(--silver);
+      margin-bottom: 36px;
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 400px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--offwhite);
+      text-decoration: none;
+      font-family: var(--font-jp);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--red);
+      background: rgba(209,31,42,0.08);
+      color: white;
+    }
+
+    .contact-link.primary {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    .contact-link.primary:hover {
+      background: #e8242f;
+      box-shadow: 0 4px 20px var(--red-glow);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--black);
+    }
+
+    @media (min-width: 768px) { footer { padding: 28px 48px; } }
+
+    footer p {
+      font-family: var(--font-jp);
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--red);
+      color: white;
+      padding: 14px 28px;
+      font-family: var(--font-jp);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 9999;
+      white-space: nowrap;
+      clip-path: polygon(0 0, 96% 0, 100% 20%, 100% 100%, 4% 100%, 0 80%);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease) forwards;
+    }
+
+    /* img placeholder */
+    .img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card);
+    }
+    .img-placeholder svg { opacity: 0.1; width: 36px; height: 36px; }
+  </style>
+</head>
+
+<body>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="logo-mark">
+      <div class="logo-icon">ZG</div>
+      <span class="logo-text">Zayka<span>GG</span></span>
+    </div>
+    <button class="close-btn" onclick="closeDrawer()">✕</button>
+  </div>
+  <ul class="drawer-nav">
+    <li><a href="#catalog" onclick="closeDrawer()">Каталог</a></li>
+    <li><a href="#how" onclick="closeDrawer()">Как мы работаем</a></li>
+    <li><a href="#contact" onclick="closeDrawer()">Связаться</a></li>
+  </ul>
+  <div class="drawer-footer">
+    <p>アート・ギフト ゲーマーのために<br>Арт-подарки для геймеров ✦</p>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a class="logo-mark" onclick="showCatalog()">
+    <div class="logo-icon">ZG</div>
+    <span class="logo-text">Zayka<span>GG</span></span>
+  </a>
+
+  <nav>
+    <ul class="nav-desktop">
+      <li><a href="#catalog">Каталог</a></li>
+      <li><a href="#how">Как мы работаем</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+  </nav>
+
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a class="nav-cta" href="https://t.me/Aleverick" target="_blank">Заказать →</a>
+    <button class="burger" id="burgerBtn" onclick="toggleDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="mainView">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="sakura-container" id="sakuraContainer"></div>
+      <div class="hero-slash"></div>
+      <div class="hero-scanline"></div>
+    </div>
+
+    <span class="hero-jp-deco">ザイカ</span>
+    <span class="hero-jp-side">アート · ゲーマーのために · ギフト</span>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow fade-up" style="animation-delay:0.1s">ZaykaGG · Арт-подарки для геймеров</p>
+      <h1 class="fade-up" style="animation-delay:0.2s">
+        <span>ТВОЙ</span>
+        <span class="line-red">ПЕРСОНАЖ</span>
+        <span class="line-outline">В ЖИЗНЬ</span>
+      </h1>
+      <p class="hero-sub fade-up" style="animation-delay:0.32s">
+        Создаю уникальные арт-подарки для геймеров и анимешников — чиби, иллюстрации, стикеры, журнальные обложки и многое другое. По вашему персонажу или вашим фото.
+      </p>
+      <div class="hero-btns fade-up" style="animation-delay:0.44s">
+        <a class="btn-primary" href="#catalog">Смотреть каталог</a>
+        <a class="btn-ghost" href="https://t.me/Aleverick" target="_blank">Написать в TG</a>
+      </div>
+      <div class="hero-stats fade-up" style="animation-delay:0.56s">
+        <div class="hero-stat-item">
+          <span class="hero-stat-num">50<span>+</span></span>
+          <span class="hero-stat-label">Проектов</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-num">6</span>
+          <span class="hero-stat-label">Форматов</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-num">GG</span>
+          <span class="hero-stat-label">Гарантия качества</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Чиби-персонажи <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Обложки журналов <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Раскраски <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Стикеры <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Настольные игры <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Этикетки <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Фотоколлажи <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Чиби-персонажи <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Обложки журналов <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Раскраски <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Стикеры <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Настольные игры <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Этикетки <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Фотоколлажи <span class="marquee-sep">✦</span></span>
+    </div>
+  </div>
+
+  <!-- CATALOG -->
+  <section id="catalog">
+    <div class="catalog-header">
+      <div>
+        <p class="section-eyebrow">Каталог услуг</p>
+        <h2 class="section-title-big">ЧТО <em>ДЕЛАЮ</em></h2>
+      </div>
+      <span class="catalog-count">06 услуг</span>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </section>
+
+  <!-- HOW WE WORK -->
+  <section class="how-section" id="how">
+    <div class="how-header">
+      <p class="section-eyebrow">Процесс</p>
+      <h2 class="section-title-big">КАК МЫ <em>РАБОТАЕМ</em></h2>
+      <p class="how-sub">От идеи до готового арт-подарка — аккуратно, быстро, без случайных результатов.</p>
+    </div>
+
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-card-num">01</div>
+        <div class="how-card-title">ОБСУЖДАЕМ ИДЕЮ</div>
+        <p class="how-card-desc">Вы рассказываете, для кого подарок, по какому поводу и какой результат хочется получить. Можно прислать фото, примеры, пожелания по стилю.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-card-num">02</div>
+        <div class="how-card-title">ПОДБИРАЕМ ФОРМАТ</div>
+        <p class="how-card-desc">Помогу выбрать лучшее: чиби-персонаж, обложка журнала, раскраска, фотоколлаж, настольная игра или этикетка для бутылки.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-card-num">03</div>
+        <div class="how-card-title">СОЗДАЮ ВАРИАНТЫ</div>
+        <p class="how-card-desc">Несколько вариантов, довожу вручную: черты лица, одежда, руки, украшения, аксессуары, фон, текст и другие детали.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-card-num">04</div>
+        <div class="how-card-title">ПОКАЗЫВАЮ РЕЗУЛЬТАТ</div>
+        <p class="how-card-desc">Вы смотрите готовый вариант и вносим небольшие корректировки: по цвету, тексту, расположению элементов.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-card-num">05</div>
+        <div class="how-card-title">ПЕРЕДАЮ ФАЙЛ</div>
+        <p class="how-card-desc">Получаете файл в хорошем качестве — для печати, публикации или отправки близкому человеку. Печать и оформление можно обсудить отдельно.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-card-num">06</div>
+        <div class="how-card-title">БЕРЕЖНО К ВАШИМ ФОТО</div>
+        <p class="how-card-desc">Ваши фотографии и личные материалы не передаются третьим лицам. Публикация работы в портфолио — только с вашего согласия.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <p class="section-eyebrow">Написать мне</p>
+      <h2>ОБСУДИМ<em>ВАШ ЗАКАЗ</em></h2>
+      <p>Расскажите о персонаже или человеке — придумаем что-то особенное. Для геймеров, анимешников и просто тех, кто ценит уникальные подарки.</p>
+      <div class="contact-links">
+        <a class="contact-link primary" href="https://t.me/Aleverick" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+          Telegram @Aleverick
+        </a>
+        <a class="contact-link" href="tel:+375447572802">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.02 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          +375 44 757-28-02
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo-mark">
+      <div class="logo-icon">ZG</div>
+      <span class="logo-text">Zayka<span>GG</span></span>
+    </div>
+    <p>© 2026 · ZaykaGG · アート · ゲーマーのために</p>
+  </footer>
+</main>
+
+<!-- PRODUCT PAGE -->
+<div class="product-page" id="productPage">
+  <div class="product-topbar">
+    <button class="back-btn" onclick="closePage()">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M11 4l-5 5 5 5"/>
+      </svg>
+      Назад
+    </button>
+    <span class="product-num-label" id="pageNum"></span>
+  </div>
+  <div class="product-inner">
+    <div class="gallery" id="gallery">
+      <div class="gallery-main" id="galleryMain"></div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+    <div class="product-info" id="productInfo"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ GG — скоро свяжусь!</div>
+
+<script>
+  /* ── SAKURA PETALS ── */
+  (function() {
+    const container = document.getElementById('sakuraContainer');
+    const count = window.innerWidth < 768 ? 10 : 18;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const size = 5 + Math.random() * 8;
+      p.style.cssText = `
+        left: ${Math.random() * 100}%;
+        width: ${size}px;
+        height: ${size * 1.2}px;
+        animation-duration: ${8 + Math.random() * 12}s;
+        animation-delay: ${Math.random() * 10}s;
+        opacity: ${0.3 + Math.random() * 0.4};
+      `;
+      container.appendChild(p);
+    }
+  })();
+
+  /* ── PRODUCTS DATA ── */
+  const products = [
+    {
+      id: 1,
+      title: "Чиби-персонаж",
+      tag: "Цифровая иллюстрация",
+      shortDesc: "Аниме · Манга",
+      imageFiles: ["chibi.png"],
+      desc: "Милый персонаж в стиле манга/аниме — с маленьким туловищем и большой головой. По вашей фотографии или игровому персонажу: с правильной причёской, одеждой, аксессуарами.",
+      features: ["По фото или описанию персонажа","До 10 вариантов поз или образов","Высокое разрешение, PNG с прозрачным фоном","Срок: 3–5 рабочих дней","Формат: цифровой файл"]
+    },
+    {
+      id: 2,
+      title: "Обложка журнала",
+      tag: "Дизайн",
+      shortDesc: "Vogue · Times · Glamour",
+      imageFiles: ["glamourcard.png","glamourcard2.png","vogue.png","vogue2.png","times.png"],
+      desc: "Ваше фото или игровой персонаж на обложке журнала — красиво, ярко, запоминающе. Стилизуем под Vogue, Times, Glamour или создадим уникальный дизайн.",
+      features: ["Стили: Vogue, Times, Glamour и другие","Имя, дата и персональные подписи","Возможна печать","Формат: PDF для печати, высокое разрешение"]
+    },
+    {
+      id: 3,
+      title: "Раскраска",
+      tag: "Иллюстрация",
+      shortDesc: "Из фото или персонажа",
+      imageFiles: ["catcolorpaper.png","familycolorpaper.png","familycolorpaper2.png"],
+      desc: "Превращаем фото или арт персонажа в детальную раскраску. Можно собрать книгу-раскраску — отличный уникальный подарок.",
+      features: ["Люди, персонажи, животные","Детальная прорисовка","Возможна печать","Срок: 3–5 рабочих дней","Формат: PDF, A4/A3"]
+    },
+    {
+      id: 4,
+      title: "Фотоколлаж",
+      tag: "Дизайн",
+      shortDesc: "С поздравлением",
+      imageFiles: ["photocollage.png"],
+      desc: "Коллаж из ваших фотографий с поздравительным текстом — отлично подходит для распечатки и вставки в рамку. Красивый подарок на день рождения или другой праздник.",
+      features: ["Любое количество фотографий","Персонализированный текст","Готов к печати в рамку","Срок: 1–2 рабочих дня","Формат: PDF, высокое разрешение"]
+    },
+    {
+      id: 5,
+      title: "Настольная игра",
+      tag: "Дизайн",
+      shortDesc: "Персонализированная",
+      imageFiles: ["boardgame.png"],
+      desc: "Настольная игра-бродилка с вопросами и заданиями про именинника или по вселенной вашей любимой игры. Уникальный подарок, который точно запомнится.",
+      features: ["Поле с маршрутом и заданиями","Вопросы про именинника или по игре","Готов к распечатке","Срок: 3–5 рабочих дней","Формат: PDF, A2"]
+    },
+    {
+      id: 6,
+      title: "Этикетка для бутылки",
+      tag: "Дизайн",
+      shortDesc: "Именная этикетка",
+      imageFiles: ["bottle.png","champagne.png"],
+      desc: "Красивая персонализированная этикетка для бутылки шампанского, вина, коньяка. С портретом именинника или персонажа — эффектный подарок.",
+      features: ["Портрет + имя + подпись","Разные стили оформления","Подберем размер под вашу бутылку","Срок: 1–2 рабочих дня","Формат: PDF, высокое разрешение"]
+    }
+  ];
+
+  const grid = document.getElementById('productGrid');
+
+  function placeholderHTML() {
+    return `<div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
+  }
+
+  function imgPlaceholderHTML() {
+    return `<div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
+  }
+
+  products.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.productId = product.id;
+    card.onclick = () => openPage(product.id);
+
+    const firstImage = product.imageFiles && product.imageFiles.length ? product.imageFiles[0] : null;
+
+    card.innerHTML = `
+      <div class="card-img">
+        <div class="card-img-overlay"></div>
+        ${firstImage
+          ? `<img class="card-main-image" src="${firstImage}" alt="${product.title}" data-image-index="0">`
+          : placeholderHTML()}
+        <span class="card-num">0${product.id}</span>
+        <div class="card-body">
+          <div class="card-title">${product.title}</div>
+          <div class="card-tag">${product.shortDesc}</div>
+        </div>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  function startCardSlideshow(productId, interval) {
+    const product = products.find(item => item.id === productId);
+    const card = document.querySelector(`.card[data-product-id="${productId}"]`);
+    const image = card?.querySelector('.card-main-image');
+    if (!product?.imageFiles || product.imageFiles.length < 2 || !image) return;
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % product.imageFiles.length;
+      image.classList.add('is-changing');
+      setTimeout(() => {
+        image.src = product.imageFiles[index];
+        image.dataset.imageIndex = index;
+        image.classList.remove('is-changing');
+      }, 250);
+    }, interval);
+  }
+
+  startCardSlideshow(2, 4000);
+  startCardSlideshow(3, 3500);
+  startCardSlideshow(6, 4500);
+
+  function openPage(id) {
+    const product = products.find(item => item.id === id);
+    document.getElementById('pageNum').textContent = `0${product.id} / 0${products.length}`;
+
+    const mainEl = document.getElementById('galleryMain');
+    const thumbsEl = document.getElementById('galleryThumbs');
+    mainEl.innerHTML = '';
+    thumbsEl.innerHTML = '';
+
+    const galleryImages = product.imageFiles || [];
+
+    if (galleryImages.length) {
+      mainEl.innerHTML = `<img src="${galleryImages[0]}" alt="${product.title}">`;
+      galleryImages.forEach((imageSrc, index) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'gallery-thumb' + (index === 0 ? ' active' : '');
+        thumb.innerHTML = `<img src="${imageSrc}" alt="${product.title} ${index + 1}">`;
+        thumb.onclick = () => {
+          mainEl.innerHTML = `<img src="${imageSrc}" alt="${product.title}">`;
+          thumbsEl.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+        };
+        thumbsEl.appendChild(thumb);
+      });
+    } else {
+      mainEl.innerHTML = imgPlaceholderHTML();
+      const thumb = document.createElement('div');
+      thumb.className = 'gallery-thumb active';
+      thumb.innerHTML = imgPlaceholderHTML();
+      thumbsEl.appendChild(thumb);
+    }
+
+    const featuresHTML = product.features.map(f => `<li><span class="feat-dot"></span>${f}</li>`).join('');
+
+    document.getElementById('productInfo').innerHTML = `
+      <div class="product-tag">${product.tag}</div>
+      <h1 class="product-title">${product.title}</h1>
+      <div class="product-divider"></div>
+      <p class="product-desc">${product.desc}</p>
+      <ul class="product-features">${featuresHTML}</ul>
+      <a class="btn-order" href="https://t.me/Aleverick" target="_blank">Заказать в Telegram →</a>
+    `;
+
+    const page = document.getElementById('productPage');
+    page.classList.add('open');
+    page.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePage() {
+    document.getElementById('productPage').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function toggleDrawer() {
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('drawerOverlay');
+    const burger = document.getElementById('burgerBtn');
+    if (drawer.classList.contains('open')) { closeDrawer(); }
+    else {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      burger.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.getElementById('burgerBtn').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function showCatalog() {
+    closePage();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  let touchStartX = 0;
+  const productPage = document.getElementById('productPage');
+  productPage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  productPage.addEventListener('touchend', e => {
+    if (e.changedTouches[0].clientX - touchStartX > 80 && productPage.scrollTop === 0) closePage();
+  }, { passive: true });
+
+  (function() {
+    const cards = document.querySelectorAll('.how-card');
+    if (!cards.length) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    cards.forEach(c => obs.observe(c));
+  })();
+</script>
+
+</body>
+</html>
