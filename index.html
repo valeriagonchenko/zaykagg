@@ -638,6 +638,7 @@
     .card:nth-child(4) { animation-delay: 0.2s; }
     .card:nth-child(5) { animation-delay: 0.25s; }
     .card:nth-child(6) { animation-delay: 0.3s; }
+    .card:nth-child(7) { animation-delay: 0.35s; }
 
     .card-img {
       width: 100%;
@@ -1307,7 +1308,7 @@
           <span class="hero-stat-label">Проектов</span>
         </div>
         <div class="hero-stat-item">
-          <span class="hero-stat-num">6</span>
+          <span class="hero-stat-num">7</span>
           <span class="hero-stat-label">Форматов</span>
         </div>
         <div class="hero-stat-item">
@@ -1321,6 +1322,7 @@
   <!-- MARQUEE -->
   <div class="marquee-wrap" aria-hidden="true">
     <div class="marquee-track">
+      <span class="marquee-item">Аниме-постеры <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Чиби-персонажи <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Обложки журналов <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Раскраски <span class="marquee-sep">✦</span></span>
@@ -1328,6 +1330,7 @@
       <span class="marquee-item">Настольные игры <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Этикетки <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Фотоколлажи <span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Аниме-постеры <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Чиби-персонажи <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Обложки журналов <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Раскраски <span class="marquee-sep">✦</span></span>
@@ -1345,7 +1348,7 @@
         <p class="section-eyebrow">Каталог услуг</p>
         <h2 class="section-title-big">ЧТО <em>ДЕЛАЮ</em></h2>
       </div>
-      <span class="catalog-count">06 услуг</span>
+      <span class="catalog-count">07 услуг</span>
     </div>
     <div class="grid" id="productGrid"></div>
   </section>
@@ -1467,6 +1470,21 @@
   const products = [
     {
       id: 1,
+      title: "Аниме-постер с вами",
+      tag: "Постер",
+      shortDesc: "В любимой вселенной",
+      imageFiles: ["poster1.png", "poster2.png", "poster3.png"],
+      desc: "Постер, где вы становитесь частью любимой аниме- или игровой вселенной. Можно добавить вас к персонажам, собрать командный арт, сделать романтический, боевой или мемный постер — по фото, референсам и вашим пожеланиям.",
+      features: [
+        "По вашему фото, персонажу или референсам",
+        "Можно добавить героев, пати, пару или команду",
+        "Стилизация под аниме / игру / фандом",
+        "Файл в высоком разрешении для печати",
+        "Формат: PDF / PNG / JPG"
+      ]
+    },
+    {
+      id: 2,
       title: "Чиби-персонаж",
       tag: "Цифровая иллюстрация",
       shortDesc: "Аниме · Манга",
@@ -1475,7 +1493,7 @@
       features: ["По фото или описанию персонажа","До 10 вариантов поз или образов","Высокое разрешение, PNG с прозрачным фоном","Срок: 3–5 рабочих дней","Формат: цифровой файл"]
     },
     {
-      id: 2,
+      id: 3,
       title: "Обложка журнала",
       tag: "Дизайн",
       shortDesc: "Vogue · Times · Glamour",
@@ -1484,7 +1502,7 @@
       features: ["Стили: Vogue, Times, Glamour и другие","Имя, дата и персональные подписи","Возможна печать","Формат: PDF для печати, высокое разрешение"]
     },
     {
-      id: 3,
+      id: 4,
       title: "Раскраска",
       tag: "Иллюстрация",
       shortDesc: "Из фото или персонажа",
@@ -1493,7 +1511,7 @@
       features: ["Люди, персонажи, животные","Детальная прорисовка","Возможна печать","Срок: 3–5 рабочих дней","Формат: PDF, A4/A3"]
     },
     {
-      id: 4,
+      id: 5,
       title: "Фотоколлаж",
       tag: "Дизайн",
       shortDesc: "С поздравлением",
@@ -1502,7 +1520,7 @@
       features: ["Любое количество фотографий","Персонализированный текст","Готов к печати в рамку","Срок: 1–2 рабочих дня","Формат: PDF, высокое разрешение"]
     },
     {
-      id: 5,
+      id: 6,
       title: "Настольная игра",
       tag: "Дизайн",
       shortDesc: "Персонализированная",
@@ -1511,7 +1529,7 @@
       features: ["Поле с маршрутом и заданиями","Вопросы про именинника или по игре","Готов к распечатке","Срок: 3–5 рабочих дней","Формат: PDF, A2"]
     },
     {
-      id: 6,
+      id: 7,
       title: "Этикетка для бутылки",
       tag: "Дизайн",
       shortDesc: "Именная этикетка",
@@ -1573,9 +1591,10 @@
     }, interval);
   }
 
-  startCardSlideshow(2, 4000);
-  startCardSlideshow(3, 3500);
-  startCardSlideshow(6, 4500);
+  startCardSlideshow(1, 3800);
+  startCardSlideshow(3, 4000);
+  startCardSlideshow(4, 3500);
+  startCardSlideshow(7, 4500);
 
   function openPage(id) {
     const product = products.find(item => item.id === id);
