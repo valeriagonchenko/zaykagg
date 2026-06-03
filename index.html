@@ -268,43 +268,16 @@
     /* ── HERO ── */
     .hero {
       position: relative;
-      min-height: 95vh;
-      display: flex;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr;
       align-items: center;
       overflow: hidden;
       background: var(--black);
     }
 
-    /* decorative JP characters */
-    .hero-jp-deco {
-      position: absolute;
-      top: 8%;
-      right: 5%;
-      font-family: var(--font-jp);
-      font-size: clamp(4rem, 12vw, 9rem);
-      font-weight: 700;
-      color: rgba(255,255,255,0.04);
-      line-height: 1;
-      letter-spacing: -0.02em;
-      pointer-events: none;
-      z-index: 1;
-      user-select: none;
-    }
-
-    .hero-jp-side {
-      position: absolute;
-      right: 2%;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: var(--font-jp);
-      font-size: 0.75rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.18);
-      letter-spacing: 0.3em;
-      writing-mode: vertical-rl;
-      pointer-events: none;
-      z-index: 1;
-      user-select: none;
+    @media (min-width: 900px) {
+      .hero { grid-template-columns: 1fr 480px; }
     }
 
     /* Sakura petals */
@@ -328,21 +301,22 @@
 
     @keyframes fall {
       0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
-      5%   { opacity: 0.6; }
-      95%  { opacity: 0.4; }
+      5%   { opacity: 0.5; }
+      95%  { opacity: 0.3; }
       100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
 
-    /* Red diagonal slash */
-    .hero-slash {
+    /* decorative grid lines background */
+    .hero-grid-lines {
       position: absolute;
-      right: -5%;
-      top: -10%;
-      width: 45%;
-      height: 130%;
-      background: linear-gradient(135deg, transparent 40%, rgba(209,31,42,0.06) 40%, rgba(209,31,42,0.12) 50%, rgba(209,31,42,0.06) 50%, transparent 60%);
+      inset: 0;
       pointer-events: none;
-      z-index: 1;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, transparent 100%);
     }
 
     /* Horizontal scan line */
@@ -351,8 +325,8 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(to right, transparent, rgba(209,31,42,0.4), transparent);
-      animation: scan 6s ease-in-out infinite;
+      background: linear-gradient(to right, transparent, rgba(209,31,42,0.5), transparent);
+      animation: scan 7s ease-in-out infinite;
       pointer-events: none;
       z-index: 2;
     }
@@ -364,15 +338,34 @@
       50% { top: 100%; }
     }
 
+    /* red corner accent top-right */
+    .hero-corner {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 120px 120px 0;
+      border-color: transparent var(--red) transparent transparent;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── HERO LEFT ── */
     .hero-content {
       position: relative;
       z-index: 3;
-      padding: 80px 28px;
-      max-width: 680px;
+      padding: 80px 28px 60px;
     }
 
-    @media (min-width: 768px) {
-      .hero-content { padding: 100px 60px; }
+    @media (min-width: 900px) {
+      .hero-content { padding: 0 0 0 60px; }
+    }
+
+    @media (min-width: 1200px) {
+      .hero-content { padding: 0 0 0 80px; }
     }
 
     .hero-eyebrow {
@@ -380,12 +373,12 @@
       align-items: center;
       gap: 10px;
       font-family: var(--font-jp);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 400;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--red);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .hero-eyebrow::before {
@@ -400,34 +393,63 @@
 
     @keyframes pulse {
       0%, 100% { box-shadow: 0 0 0 0 var(--red-glow); }
-      50% { box-shadow: 0 0 0 6px transparent; }
+      50% { box-shadow: 0 0 0 8px transparent; }
     }
 
     .hero h1 {
       font-family: var(--font-display);
-      font-size: clamp(3.5rem, 13vw, 8.5rem);
-      line-height: 0.9;
+      font-size: clamp(3rem, 10vw, 6.5rem);
+      line-height: 0.92;
       letter-spacing: 0.02em;
       color: var(--offwhite);
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     .hero h1 .line-red { color: var(--red); display: block; }
     .hero h1 .line-outline {
       display: block;
-      -webkit-text-stroke: 1.5px var(--offwhite);
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.5);
       color: transparent;
     }
 
     .hero-sub {
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       color: var(--silver);
-      max-width: 400px;
+      max-width: 420px;
       line-height: 1.75;
       font-weight: 300;
       margin-bottom: 36px;
       border-left: 2px solid var(--red);
       padding-left: 16px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-family: var(--font-jp);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      color: var(--silver);
+      text-transform: uppercase;
+    }
+
+    .hero-tag-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--sakura);
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
     .hero-btns {
@@ -484,12 +506,80 @@
       color: var(--offwhite);
     }
 
+    /* ── HERO MASCOT (RIGHT SIDE) ── */
+    .hero-mascot {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      height: 100%;
+      min-height: 420px;
+      padding: 0 20px 0 0;
+    }
+
+    @media (max-width: 899px) {
+      .hero-mascot {
+        display: flex;
+        justify-content: center;
+        padding: 0 28px 60px;
+        min-height: auto;
+      }
+    }
+
+    /* red glow ground shadow under mascot */
+    .hero-mascot::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      height: 60px;
+      background: radial-gradient(ellipse at center, rgba(209,31,42,0.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-mascot img {
+      height: clamp(320px, 55vh, 620px);
+      width: auto;
+      object-fit: contain;
+      display: block;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 40px rgba(209,31,42,0.2)) drop-shadow(0 20px 60px rgba(0,0,0,0.8));
+      animation: mascotFloat 5s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+
+    @keyframes mascotFloat {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    /* JP text alongside mascot */
+    .hero-mascot-jp {
+      position: absolute;
+      left: 12px;
+      top: 20%;
+      font-family: var(--font-jp);
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.35em;
+      writing-mode: vertical-rl;
+      pointer-events: none;
+      user-select: none;
+    }
+
     /* hero stats row */
     .hero-stats {
       display: flex;
-      gap: 32px;
-      margin-top: 56px;
+      gap: 28px;
+      margin-top: 44px;
       flex-wrap: wrap;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
     }
 
     .hero-stat-item {
@@ -499,7 +589,7 @@
 
     .hero-stat-num {
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: 1.8rem;
       line-height: 1;
       color: var(--offwhite);
       letter-spacing: 0.04em;
@@ -509,11 +599,11 @@
 
     .hero-stat-label {
       font-family: var(--font-jp);
-      font-size: 0.62rem;
+      font-size: 0.58rem;
       letter-spacing: 0.18em;
       color: var(--silver);
       text-transform: uppercase;
-      margin-top: 4px;
+      margin-top: 5px;
     }
 
     /* ── MARQUEE ── */
@@ -638,7 +728,6 @@
     .card:nth-child(4) { animation-delay: 0.2s; }
     .card:nth-child(5) { animation-delay: 0.25s; }
     .card:nth-child(6) { animation-delay: 0.3s; }
-    .card:nth-child(7) { animation-delay: 0.35s; }
 
     .card-img {
       width: 100%;
@@ -1279,25 +1368,27 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg">
-      <div class="sakura-container" id="sakuraContainer"></div>
-      <div class="hero-slash"></div>
-      <div class="hero-scanline"></div>
-    </div>
-
-    <span class="hero-jp-deco">ザイカ</span>
-    <span class="hero-jp-side">アート · ゲーマーのために · ギフト</span>
+    <div class="sakura-container" id="sakuraContainer"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-scanline"></div>
+    <div class="hero-corner"></div>
 
     <div class="hero-content">
-      <p class="hero-eyebrow fade-up" style="animation-delay:0.1s">ZaykaGG · Арт-подарки для геймеров</p>
-      <h1 class="fade-up" style="animation-delay:0.2s">
-        <span>ТВОЙ</span>
-        <span class="line-red">ПЕРСОНАЖ</span>
-        <span class="line-outline">В ЖИЗНЬ</span>
+      <p class="hero-eyebrow fade-up" style="animation-delay:0.05s">ZaykaGG · アート · ゲーマーのために</p>
+      <h1 class="fade-up" style="animation-delay:0.15s">
+        <span>ПЕРСОНАЛЬНЫЕ</span>
+        <span class="line-red">АРТЫ</span>
+        <span class="line-outline">И ПОДАРКИ</span>
       </h1>
-      <p class="hero-sub fade-up" style="animation-delay:0.32s">
-        Создаю уникальные арт-подарки для геймеров и анимешников — чиби, иллюстрации, стикеры, журнальные обложки и многое другое. По вашему персонажу или вашим фото.
+      <p class="hero-sub fade-up" style="animation-delay:0.28s">
+        Стикеры, чиби, постеры, обложки и многое другое — по твоему персонажу, фото или целой вселенной.
       </p>
+      <div class="hero-tags fade-up" style="animation-delay:0.36s">
+        <span class="hero-tag"><span class="hero-tag-dot"></span>Чиби и иллюстрации</span>
+        <span class="hero-tag"><span class="hero-tag-dot"></span>Аниме-постеры</span>
+        <span class="hero-tag"><span class="hero-tag-dot"></span>Стикеры</span>
+        <span class="hero-tag"><span class="hero-tag-dot"></span>Настольные игры</span>
+      </div>
       <div class="hero-btns fade-up" style="animation-delay:0.44s">
         <a class="btn-primary" href="#catalog">Смотреть каталог</a>
         <a class="btn-ghost" href="https://t.me/Aleverick" target="_blank">Написать в TG</a>
@@ -1308,7 +1399,7 @@
           <span class="hero-stat-label">Проектов</span>
         </div>
         <div class="hero-stat-item">
-          <span class="hero-stat-num">7</span>
+          <span class="hero-stat-num">6</span>
           <span class="hero-stat-label">Форматов</span>
         </div>
         <div class="hero-stat-item">
@@ -1316,6 +1407,11 @@
           <span class="hero-stat-label">Гарантия качества</span>
         </div>
       </div>
+    </div>
+
+    <div class="hero-mascot fade-up" style="animation-delay:0.1s">
+      <span class="hero-mascot-jp">アート · ザイカ · ゲーマー</span>
+      <img src="zaykagg.png" alt="ZaykaGG mascot">
     </div>
   </section>
 
@@ -1328,7 +1424,6 @@
       <span class="marquee-item">Раскраски <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Стикеры <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Настольные игры <span class="marquee-sep">✦</span></span>
-      <span class="marquee-item">Этикетки <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Фотоколлажи <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Аниме-постеры <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Чиби-персонажи <span class="marquee-sep">✦</span></span>
@@ -1336,7 +1431,6 @@
       <span class="marquee-item">Раскраски <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Стикеры <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Настольные игры <span class="marquee-sep">✦</span></span>
-      <span class="marquee-item">Этикетки <span class="marquee-sep">✦</span></span>
       <span class="marquee-item">Фотоколлажи <span class="marquee-sep">✦</span></span>
     </div>
   </div>
@@ -1348,7 +1442,7 @@
         <p class="section-eyebrow">Каталог услуг</p>
         <h2 class="section-title-big">ЧТО <em>ДЕЛАЮ</em></h2>
       </div>
-      <span class="catalog-count">07 услуг</span>
+      <span class="catalog-count">06 услуг</span>
     </div>
     <div class="grid" id="productGrid"></div>
   </section>
@@ -1473,15 +1567,9 @@
       title: "Аниме-постер с вами",
       tag: "Постер",
       shortDesc: "В любимой вселенной",
-      imageFiles: ["poster1.png", "poster2.png", "poster3.png"],
+      imageFiles: ["poster1.png","poster2.png","poster3.png"],
       desc: "Постер, где вы становитесь частью любимой аниме- или игровой вселенной. Можно добавить вас к персонажам, собрать командный арт, сделать романтический, боевой или мемный постер — по фото, референсам и вашим пожеланиям.",
-      features: [
-        "По вашему фото, персонажу или референсам",
-        "Можно добавить героев, пати, пару или команду",
-        "Стилизация под аниме / игру / фандом",
-        "Файл в высоком разрешении для печати",
-        "Формат: PDF / PNG / JPG"
-      ]
+      features: ["По вашему фото, персонажу или референсам","Можно добавить героев, пати, пару или команду","Стилизация под аниме / игру / фандом","Файл в высоком разрешении для печати","Формат: PDF / PNG / JPG"]
     },
     {
       id: 2,
@@ -1527,15 +1615,6 @@
       imageFiles: ["boardgame.png"],
       desc: "Настольная игра-бродилка с вопросами и заданиями про именинника или по вселенной вашей любимой игры. Уникальный подарок, который точно запомнится.",
       features: ["Поле с маршрутом и заданиями","Вопросы про именинника или по игре","Готов к распечатке","Срок: 3–5 рабочих дней","Формат: PDF, A2"]
-    },
-    {
-      id: 7,
-      title: "Этикетка для бутылки",
-      tag: "Дизайн",
-      shortDesc: "Именная этикетка",
-      imageFiles: ["bottle.png","champagne.png"],
-      desc: "Красивая персонализированная этикетка для бутылки шампанского, вина, коньяка. С портретом именинника или персонажа — эффектный подарок.",
-      features: ["Портрет + имя + подпись","Разные стили оформления","Подберем размер под вашу бутылку","Срок: 1–2 рабочих дня","Формат: PDF, высокое разрешение"]
     }
   ];
 
@@ -1563,7 +1642,7 @@
         ${firstImage
           ? `<img class="card-main-image" src="${firstImage}" alt="${product.title}" data-image-index="0">`
           : placeholderHTML()}
-        <span class="card-num">0${product.id}</span>
+        <span class="card-num">${String(product.id).padStart(2,'0')}</span>
         <div class="card-body">
           <div class="card-title">${product.title}</div>
           <div class="card-tag">${product.shortDesc}</div>
@@ -1591,10 +1670,12 @@
     }, interval);
   }
 
-  startCardSlideshow(1, 3800);
-  startCardSlideshow(3, 4000);
-  startCardSlideshow(4, 3500);
-  startCardSlideshow(7, 4500);
+  // start slideshows for products with multiple images
+  products.forEach(p => {
+    if (p.imageFiles && p.imageFiles.length > 1) {
+      startCardSlideshow(p.id, 3500 + Math.random() * 1500);
+    }
+  });
 
   function openPage(id) {
     const product = products.find(item => item.id === id);
